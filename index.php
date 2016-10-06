@@ -28,7 +28,9 @@ if (isset($_REQUEST['url']) && !empty($_REQUEST['url']) && $_REQUEST['url'] > 0 
     $_SESSION['year'] = isset($_REQUEST['year']) ? (int) $_REQUEST['year'] : null;
     $_SESSION['month'] = isset($_REQUEST['month']) ? (int) $_REQUEST['month'] : null;
     $_SESSION['day'] = isset($_REQUEST['day']) ? (int) $_REQUEST['day'] : null;
-} else if (isset($_SESSION['url'])) {
+}
+
+if (!isset($_REQUEST['url'])) {
     unset($_SESSION['url']);
     unset($_SESSION['year']);
     unset($_SESSION['month']);
@@ -36,6 +38,7 @@ if (isset($_REQUEST['url']) && !empty($_REQUEST['url']) && $_REQUEST['url'] > 0 
     unset($_SESSION['day_arr']);
     unset($_SESSION['full_url']);
 }
+
 ?>
 <!DOCTYPE HTML>
 <html lang="ru">
@@ -124,7 +127,7 @@ if (isset($_REQUEST['url']) && !empty($_REQUEST['url']) && $_REQUEST['url'] > 0 
                                 $_SESSION['day'] = substr($_SESSION['day'], 0, 2);
                         }
 
-                        if (!isset($_SESSION['day_arr'])) {
+                        if (!isset($_SESSION['day'])) {
                             $level4 = web($urls[$_SESSION['url']] . $_SESSION['year'] . '/' . $_SESSION['month'] . '/');
                             $m = '';
                             if (strlen($_SESSION['month']) == 1)
@@ -147,6 +150,9 @@ if (isset($_REQUEST['url']) && !empty($_REQUEST['url']) && $_REQUEST['url'] > 0 
                             }
                         }
                         else {
+                            if (!isset($_SESSION['day_arr'])) {
+                                $_SESSION['day_arr'] = array ($_SESSION['day']);
+                            }
                             echo 'День: <select name="day"><option value="0">Выберите день</option>';
                             foreach ($_SESSION['day_arr'] as $key => $value) {
                                 $selected = '';
