@@ -23,9 +23,12 @@ function web($url) {
 }
 
 //level 1
-if (isset($_REQUEST['url']) && !empty($_REQUEST['url']) && $_REQUEST['url'] > 0) {
-    $url = (int) $_REQUEST['url'];
-    $_SESSION['url'] = $url;
+if (isset($_REQUEST['url']) && !empty($_REQUEST['url']) && $_REQUEST['url'] > 0
+    && !empty($_REQUEST['year']) && !empty($_REQUEST['month']) && !empty($_REQUEST['day']) ) {
+    $_SESSION['url'] = (int) $_REQUEST['url'];
+    $_SESSION['year'] = (int) $_REQUEST['year'];
+    $_SESSION['month'] = (int) $_REQUEST['month'];
+    $_SESSION['day'] = (int) $_REQUEST['day'];
 } else if (isset($_SESSION['url'])) {
     unset($_SESSION['url']);
     unset($_SESSION['year']);
