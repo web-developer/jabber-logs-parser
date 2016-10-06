@@ -23,12 +23,11 @@ function web($url) {
 }
 
 //level 1
-if (isset($_REQUEST['url']) && !empty($_REQUEST['url']) && $_REQUEST['url'] > 0
-    && !empty($_REQUEST['year']) && !empty($_REQUEST['month']) && !empty($_REQUEST['day']) ) {
+if (isset($_REQUEST['url']) && !empty($_REQUEST['url']) && $_REQUEST['url'] > 0 ) {
     $_SESSION['url'] = (int) $_REQUEST['url'];
-    $_SESSION['year'] = (int) $_REQUEST['year'];
-    $_SESSION['month'] = (int) $_REQUEST['month'];
-    $_SESSION['day'] = (int) $_REQUEST['day'];
+    $_SESSION['year'] = isset($_REQUEST['year']) ? (int) $_REQUEST['year'] : null;
+    $_SESSION['month'] = isset($_REQUEST['month']) ? (int) $_REQUEST['month'] : null;
+    $_SESSION['day'] = isset($_REQUEST['day']) ? (int) $_REQUEST['day'] : null;
 } else if (isset($_SESSION['url'])) {
     unset($_SESSION['url']);
     unset($_SESSION['year']);
@@ -39,15 +38,16 @@ if (isset($_REQUEST['url']) && !empty($_REQUEST['url']) && $_REQUEST['url'] > 0
 }
 ?>
 <!DOCTYPE HTML>
-<html>
+<html lang="ru">
     <head><title>Jabber logs parser v0.2  — Фото и видео из логов джаббер конференций</title>
-        <meta charset="UTF-8" />
-        <meta name="description" content="Jabber logs parser  — Фото и видео из логов джаббер конференций" />
-        <meta name="keywords" content="Jabber logs parser  — Фото и видео из логов джаббер конференций" />
-        <style>
+        <meta charset="UTF-8">
+        <meta name="description" content="Jabber logs parser  — Фото и видео из логов джаббер конференций">
+        <meta name="keywords" content="Jabber logs parser  — Фото и видео из логов джаббер конференций">
+        <style type="text/css">
             * {padding:0; margin: 0;}
             h2 {font-size: 20px; padding-left: 10px; padding-top:5px;}
             body {font-size: 11px; background-color: black; color: white;}
+            .btn {background-color: #F14158; color: white; border-radius:4px; border: 1px solid white; margin-left: 10px; padding: 3px;}
             .corner {padding: 10px; margin: 10px; -moz-border-radius: 10px; -webkit-border-radius: 10px; border-radius: 10px; -moz-box-shadow: 0px 0px 5px #ccc; box-shadow: 0px 0px 5px #ccc; }
         </style>
         <script type="text/javascript" src="jquery-1.8.0.min.js"></script>
@@ -57,7 +57,7 @@ if (isset($_REQUEST['url']) && !empty($_REQUEST['url']) && $_REQUEST['url'] > 0
     </head>
     <body>
         <form action="index.php" method="get">
-            <h2><a style="color:white;text-decoration:none;text-shadow: 1px 1px 0px red;" href="javascript:location.href=location.pathname">Jabber logs parser v0.2</a></h2>
+            <h2><a style="color:#F14158; text-decoration:none;text-shadow: 1px -1px 0px white;" href="javascript:location.href=location.pathname">Jabber logs parser v0.2</a></h2>
 	    <p style="padding-left:10px"><i>Фото и видео из логов джаббер конференций</i></p>
 	    <br>
             <p style="padding-left:10px">URL: <select name="url">
@@ -147,7 +147,7 @@ if (isset($_REQUEST['url']) && !empty($_REQUEST['url']) && $_REQUEST['url'] > 0
                             }
                         }
                         else {
-                            echo 'Выберите день: <select name="day"><option value="0">Выберите день</option>';
+                            echo 'День: <select name="day"><option value="0">Выберите день</option>';
                             foreach ($_SESSION['day_arr'] as $key => $value) {
                                 $selected = '';
                                 if ($_SESSION['day'] == (int) $value)
@@ -193,10 +193,13 @@ if (isset($_REQUEST['url']) && !empty($_REQUEST['url']) && $_REQUEST['url'] > 0
                     }
                 }
             }
-            if (isset($_SESSION['full_url']))
-                echo ' <input id="log" type="button" value=" Лог ">';
+            if (isset($_SESSION['full_url'])){
+                echo ' <input class="btn" style="background-color: green;" id="log" type="button" value="Чат лог">';
+            }
+
             ?>
-            <input onclick="location.href=location.pathname;" type="button" value="Очистить"><input type="submit" value="Выбрать"></p>
+
+                <input class="btn" style="background-color: brown;" onclick="location.href=location.pathname;" type="button" value="Очистить"><input class="btn" type="submit" value="Выбрать"></p>
         </form>
         <div id="gallery"></div>
 <?php if (isset($_SESSION['day_arr'])) { ?>
