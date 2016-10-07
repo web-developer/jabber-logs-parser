@@ -227,7 +227,7 @@ if (!isset($_REQUEST['url'])) {
     }
 
     <?php echo $html; ?>
-                var hash = location.hash.substring(1);
+                var hash = location.hash.substring(1)?location.hash.substring(1):0;
                 if (typeof all_content != 'undefined'){
                     Galleria.loadTheme('galleria/themes/classic/galleria.classic.min.js');
                     Galleria.run('#gallery', {width:$(document).width(),height:$(window).height()-150,imageCrop: false, imagePan: false, imagePosition: "center center", lightbox: true, dataSource: all_content, dummy: '404.jpg', show:hash});
