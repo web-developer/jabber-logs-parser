@@ -216,9 +216,25 @@ if (!isset($_REQUEST['url'])) {
         <div id="gallery"></div>
 <?php if (isset($_SESSION['day_arr'])) { ?>
            	<script>
+
+    function setHash (hash) {
+      location.replace(location.protocol
+          + '//'
+          + location.host
+          + location.pathname.replace(/^\/?/, '/')
+          + location.search
+          + '#' + hash);
+    }
+
     <?php echo $html; ?>
-                Galleria.loadTheme('galleria/themes/classic/galleria.classic.min.js');
-                Galleria.run('#gallery', {width:$(document).width(),height:$(window).height()-150,imageCrop: false, imagePan: false, imagePosition: "center center", lightbox: true, dataSource: all_content, dummy: '404.jpg'});
+                var hash = location.hash.substring(1);
+                if (typeof all_content != 'undefined'){
+                    Galleria.loadTheme('galleria/themes/classic/galleria.classic.min.js');
+                    Galleria.run('#gallery', {width:$(document).width(),height:$(window).height()-150,imageCrop: false, imagePan: false, imagePosition: "center center", lightbox: true, dataSource: all_content, dummy: '404.jpg', show:hash});
+                    Galleria.on('image', function(e) {
+                        setHash(e.index);
+                    });
+                }
     <?php if (isset($_SESSION['full_url'])) echo '$("#log").colorbox({iframe:true, width:"80%", height:"80%", href:"' . $_SESSION['full_url'] . '"});'; ?>
             </script>
 <?php } ?>
