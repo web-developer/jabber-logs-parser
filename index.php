@@ -8,10 +8,12 @@ session_start();
 error_reporting(0);
 $html = '';
 $urls = array('Выберите лог',
-    'http://beerseller.org/bot_log/ubuntu@conference.jabber.ru/',
+    'http://chatlogs.jabber.ru/pikabu@conference.jabber.ru/',
+    'http://chatlogs.jabber.ru/world_of_tanks@conference.jabber.ru/',
     'http://chatlogs.jabber.ru/linux-talks@conference.jabber.ru/',
     'http://chatlogs.jabber.ru/programming@conference.jabber.ru/',
-    'http://chatlogs.jabber.ru/talks@conference.jabber.ru/',
+    'http://chatlogs.jabber.ru/erlang-talks@conference.jabber.ru/',
+    'http://chatlogs.jabber.ru/clubjabber@conference.jabber.ru/',
 );
 
 function web($url) {
@@ -199,13 +201,17 @@ if (!isset($_REQUEST['url'])) {
                     }
                 }
             }
+            if (isset($_SESSION['year'])){
+                echo ' <input class="btn" style="background-color: brown;" onclick="location.href=location.pathname;" type="button" value="Очистить">';
+            }
+
             if (isset($_SESSION['full_url'])){
                 echo ' <input class="btn" style="background-color: green;" id="log" type="button" value="Чат лог">';
             }
 
             ?>
 
-                <input class="btn" style="background-color: brown;" onclick="location.href=location.pathname;" type="button" value="Очистить"><input class="btn" type="submit" value="Выбрать"></p>
+                <input class="btn" type="submit" value="Выбрать"></p>
         </form>
         <div id="gallery"></div>
 <?php if (isset($_SESSION['day_arr'])) { ?>
